@@ -1,10 +1,10 @@
-package com.balance.balance;
+package com.balance.balance.controllers;
 
 import com.balance.balance.forms.SetBalance;
+import com.balance.balance.repoBalance.Repository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @Tag(name = "Карта", description = "Бонусная Карта клиента")
 public class BalanceController {
-    JdbcTemplate jdbcTemplate;
+    public Repository repository;
 
     @PostMapping("/setBalance")
     @CrossOrigin("*")
@@ -21,8 +21,16 @@ public class BalanceController {
             summary = "setBalance",
             description = "Добавление баланса"
     )
-    public int setBalance(@RequestBody SetBalance setBalance) {
-        return jdbcTemplate.update("insert into balance_bonus_system.public.balance(id_client, balance) VALUES (?, ?)", setBalance.getId_client(), setBalance.getBalance());
+    public String setBalance(@RequestBody SetBalance setBalance) {
+        if (Boolean.TRUE.equals(repository.findByClientIdBoolean(setBalance.getId_client()))) {
+            repository.updateBalanceExists(setBalance.getBalance(), setBalance.getId_client());
+        }
+
+        else {
+            repository.updateBalance(setBalance.getId_client(), setBalance.getBalance());
+        }
+
+        return "Success update balance";
     }
 
     @GetMapping("/getByClientID/{idClient}")
@@ -35,6 +43,6 @@ public class BalanceController {
     public String getByClientID(
             @PathVariable("idClient") String idClient
     ) {
-        return jdbcTemplate.queryForList("select * from balance_bonus_system.public.balance where id_client=?", idClient).toString();
+        return repository.findByClientIdArray(idClient).toString();
     }
 }

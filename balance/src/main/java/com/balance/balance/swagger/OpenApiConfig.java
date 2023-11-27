@@ -1,4 +1,4 @@
-package com.balance.balance;
+package com.balance.balance.swagger;
 
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.info.*;
