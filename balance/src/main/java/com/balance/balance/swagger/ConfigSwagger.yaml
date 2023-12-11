@@ -1,0 +1,70 @@
+openapi: "3.0.2"
+info:
+  title: Бонусная Система
+  description: Просмотр баланса на карте
+  version: 1.0.0
+  contact:
+    name: Георгий Панов
+    email: panovgeorgij819@gmail.com
+    url: https://georgij1.github.io/portfoilio_georgii/
+servers:
+  - url: https://localhost:8080
+tags:
+  - name: Баланс клиента
+    description: Баланс на карте клиента
+paths:
+  /balance/getByClientID/{idClient}:
+    get:
+      tags:
+        - Баланс клиента
+      summary: Balance
+      description: Получение баланса по idClient
+      operationId: getByClientID
+      parameters:
+        - name: idClient
+          in: path
+          description: ClientID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalanceTableDTO'
+  /balance/setBalanceCustomerCard:
+    post:
+      tags:
+        - Баланс клиента
+      summary: Обновление баланса клиента
+      description: Позволяет обновить баланс на карте клиента
+      operationId: setBalanceCustomerCard
+      requestBody:
+        description: set balance customer
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BalanceTableDTO'
+        required: true
+      responses:
+          '201':
+            description: get success
+
+components: 
+  schemas:
+    BalanceTableDTO:
+      required:
+        - id
+        - id_client
+        - balance
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        id_client:
+          type: integer
+        balance:
+          type: integer

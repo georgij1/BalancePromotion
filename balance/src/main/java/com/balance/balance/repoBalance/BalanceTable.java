@@ -1,17 +1,28 @@
 package com.balance.balance.repoBalance;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 
-@Entity
-@Table(name="balance")
+@Accessors(chain = true)
+@Table("balance")
 @Data
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class BalanceTable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    @Column(name = "id_client")
-    private String id_client;
-    @Column(name = "balance")
+    private Integer id;
+    @Column("id_client")
+    private Integer id_client;
+    @Column("balance")
     private Integer balance;
 }
