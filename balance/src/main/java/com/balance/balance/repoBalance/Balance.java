@@ -11,18 +11,24 @@ import lombok.experimental.Accessors;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.util.UUID;
+
 @Accessors(chain = true)
-@Table("balance")
+@Table
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class BalanceTable {
+public class Balance {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-    @Column("id_client")
-    private Integer id_client;
-    @Column("balance")
-    private Integer balance;
+    private UUID id;
+    @Column("card_id")
+    private Integer card_id;
+    @Column("value")
+    private Integer value;
+    @Column("exp")
+    private String exp;
+    @Column("date_create_upd")
+    private String date_create_upd;
 }

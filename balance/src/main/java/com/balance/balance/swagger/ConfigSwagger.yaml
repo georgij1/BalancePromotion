@@ -13,58 +13,102 @@ tags:
   - name: Баланс клиента
     description: Баланс на карте клиента
 paths:
-  /balance/getByClientID/{idClient}:
+  /balance/getBalance/{CardId}:
     get:
       tags:
         - Баланс клиента
-      summary: Balance
-      description: Получение баланса по idClient
-      operationId: getByClientID
+      summary: Баланс
+      description: Получение баланса клиента
+      operationId: getBalanceClient
       parameters:
-        - name: idClient
+        - name: CardId
           in: path
-          description: ClientID
+          description: CardId
           required: true
           schema:
             type: integer
       responses:
         '200':
-          description: successful operation
+          description: ok
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/BalanceTableDTO'
-  /balance/setBalanceCustomerCard:
+  /balance/createBalanceCustomerCard:
     post:
       tags:
         - Баланс клиента
-      summary: Обновление баланса клиента
-      description: Позволяет обновить баланс на карте клиента
-      operationId: setBalanceCustomerCard
+      summary: Создание баланса клиента
+      description: Позволяет создать баланс клиенту
+      operationId: createBalanceCustomerCard
       requestBody:
-        description: set balance customer
+        description: создание баланса клиента
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/BalanceTableDTO'
         required: true
       responses:
-          '201':
-            description: get success
+        '201':
+          description: ok
 
-components: 
+  /balance/updateBalanceCustomerCard:
+    post:
+      tags:
+        - Баланс клиента
+      summary: Обновление баланса клиента
+      description: Позволяет обновить баланс клиенту
+      operationId: updateBalanceCustomerCard
+      requestBody:
+        description: обновление баланса клиента
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBalanceTableDto'
+        required: true
+      responses:
+        '201':
+          description: ok
+  /balance/halfcheck:
+    get:
+      tags:
+        - Баланс клиента
+      summary: Статус сервера
+      description: Запущен ли сервер
+      operationId: half-check
+      responses:
+        '200':
+          description: ok
+
+components:
   schemas:
     BalanceTableDTO:
       required:
         - id
-        - id_client
-        - balance
+        - card_id
+        - value
+        - exp
+      type: object
+      properties:
+        card_id:
+          type: integer
+        value:
+          type: integer
+        exp:
+          type: string
+    UpdateBalanceTableDto:
+      required:
+        - id
+        - card_id
+        - value
       type: object
       properties:
         id:
+          type: string
+          example: 0873ca6b-51fd-4708-b73d-43c023f0877d
+        card_id:
           type: integer
-          readOnly: true
-        id_client:
+          example: 1
+        value:
           type: integer
-        balance:
-          type: integer
+          example: 100

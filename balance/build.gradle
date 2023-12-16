@@ -58,8 +58,8 @@ openApiGenerate {
     invokerPackage.set("org.openapi.example.invoker")
     modelPackage.set("org.openapi.example.model")
     configOptions.set([
-            dateLibrary: "java8",
-            interfaceOnly: "true",
+            dateLibrary         : "java8",
+            interfaceOnly       : "true",
             skipDefaultInterface: "true"
     ] as Map<? extends String, ? extends String>)
 }
