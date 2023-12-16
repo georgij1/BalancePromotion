@@ -5,7 +5,6 @@ import com.balance.balance.repoBalance.BalanceRepository;
 import lombok.AllArgsConstructor;
 import org.openapi.example.model.BalanceTableDTO;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -41,8 +40,6 @@ public class BalanceCustomerCard {
         for (Integer numbers : number) {
             sum += numbers;
         }
-
-        System.out.println("Сумма чисел в списке: " + sum);
 
         return new BalanceTableDTO(
                 cardId,
