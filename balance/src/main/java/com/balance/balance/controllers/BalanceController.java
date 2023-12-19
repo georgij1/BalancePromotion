@@ -1,6 +1,6 @@
 package com.balance.balance.controllers;
 
-import com.balance.balance.services.BalanceCustomerCard;
+import com.balance.balance.services.ServiceImpl;
 import lombok.AllArgsConstructor;
 import org.openapi.example.api.BalanceApi;
 import org.openapi.example.model.BalanceTableDTO;
@@ -9,19 +9,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
 public class BalanceController implements BalanceApi {
-    private BalanceCustomerCard balanceCustomerCard;
+    private ServiceImpl service;
 
     @Override
     public ResponseEntity<Void> createBalanceCustomerCard(
             BalanceTableDTO balanceTableDTO
     ) {
-        balanceCustomerCard.createBalance(
+        service.createBalance(
                 balanceTableDTO.getCardId(),
                 balanceTableDTO.getValue(),
                 balanceTableDTO.getExp()
@@ -33,7 +32,7 @@ public class BalanceController implements BalanceApi {
     public ResponseEntity<Void> updateBalanceCustomerCard(
             UpdateBalanceTableDto updateBalanceTableDto
     ) {
-        balanceCustomerCard.updateBalance(
+        service.updateBalance(
                 UUID.fromString(String.valueOf(updateBalanceTableDto.getId())),
                 updateBalanceTableDto.getValue()
         );
@@ -42,7 +41,7 @@ public class BalanceController implements BalanceApi {
 
     @Override
     public ResponseEntity<BalanceTableDTO> getBalanceClient(Integer CardId) {
-        BalanceTableDTO arr = balanceCustomerCard.findByClientId(CardId);
+        BalanceTableDTO arr = service.findByClientId(CardId);
         return ResponseEntity.ok().body(arr);
     }
 

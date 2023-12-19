@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Service
 @AllArgsConstructor
-public class BalanceCustomerCard {
+public class ServiceCard implements ServiceImpl {
     public BalanceRepository balanceRepository;
 
     public void createBalance(
